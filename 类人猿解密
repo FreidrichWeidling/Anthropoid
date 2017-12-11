@@ -1,0 +1,462 @@
+# -//类人猿解密
+
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+
+#define maxsize 6666
+#define true 1
+#define false 0
+
+char b[25];
+char B[25];
+char br;
+char fa;
+char q[maxsize];
+char miyao[maxsize];
+char ming1[maxsize];
+char ming2[maxsize];
+int ss = 0;
+int jib = 0;
+int zls = 0;
+
+typedef char status;
+typedef struct btn
+{
+	char data;
+	struct btn *lc, *rc;
+}btn, *bt;
+
+status jianshu1(bt T, int key, bt f, bt *p, int i)
+{
+	if (!T)
+	{
+		*p = f;
+		return false;
+	}
+	else
+	{
+		return  jianshu1(T->rc, key, T, p, i);
+	}
+}
+
+status  jianshu2(bt *T, int key, int i)
+{
+	bt p, s;
+	if (!jianshu1(*T, key, NULL, &p, i))
+	{
+		s = (bt)malloc(sizeof(btn));
+		s->data = key;
+		s->lc = s->rc = NULL;
+		if (!p)
+		{
+			*T = s;
+		}
+		else if (i>0 && (i + 1) % 2 == 0)
+		{
+			p->lc = s;
+		}
+		else
+		{
+			p->rc = s;
+		}
+		return true;
+	}
+	else
+		return false;
+}
+
+void gz(char a[maxsize])
+{
+	char c[25] = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y' };
+	int m = 0, j = strlen(a), i;
+	for (int k = 0; k < strlen(a); k++)
+	{
+		b[k] = a[k];
+	}
+	for (int u = 0; u < 25; u++)
+	{
+		for (i = 0; i < strlen(a); i++)
+		{
+			if (c[u] != a[i])
+			{
+				m++;
+			}
+		}
+		if (m == strlen(a))
+		{
+			b[j] = c[u];
+			j++;
+		}
+		else
+		{
+		}
+		m = 0;
+	}
+}
+
+void GZ(char a[maxsize])
+{
+	char c[25] = { 'A','B','C', 'D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y' };
+	int m = 0, j = strlen(a), i;
+	for (int k = 0; k < strlen(a); k++)
+	{
+		B[k] = a[k];
+	}
+	for (int u = 0; u < 25; u++)
+	{
+		for (i = 0; i < strlen(a); i++)
+		{
+			if (c[u] != a[i])
+			{
+				m++;
+			}
+		}
+		if (m == strlen(a))
+		{
+			B[j] = c[u];
+			j++;
+		}
+		else
+		{
+		}
+		m = 0;
+	}
+}
+
+void srmy(char y[maxsize])
+{
+	int pd = 0, zmcf = 0, qtwt = 0, qzyz = 0;
+	gets(y);
+	for (int k = 0; k < strlen(y) - 1; k++)
+	{
+		for (int r = k + 1; r < strlen(y); r++)
+		{
+			if (y[k] == y[r])
+			{
+				pd++;
+				zmcf++;
+			}
+		}
+	}
+	for (int k = 0; k < strlen(y); k++)
+	{
+		if (y[k] == 'z' || y[k] == 'Z')
+		{
+			pd++;
+			qzyz++;
+		}
+	}
+	for (int k = 0; k < strlen(y); k++)
+	{
+		if (y[k] <'A' || y[k]>'z')
+		{
+			pd++;
+			qtwt++;
+		}
+		if (y[k] <'a' && y[k]>'Z')
+		{
+			pd++;
+			qtwt++;
+		}
+	}
+	if (pd)
+	{
+		if (zmcf)
+		{
+			printf("密钥中的字符不可重复!!!\n");
+		}
+		if (qtwt)
+		{
+			printf("请输入英文字母!!!\n");
+		}
+		if (qzyz)
+		{
+			printf("密钥中不可有字母Z!!!\n");
+		}
+		printf("请重新输入密钥:\n");
+		char zj[maxsize];
+		srmy(zj);
+	}
+	int k;
+	for (k = 0; k < strlen(y); k++)
+	{
+		miyao[k] = y[k];
+	}
+}
+
+void zljm(char a[maxsize], int kkk)
+{
+	if (kkk>0)
+	{
+		char l[maxsize];
+		int k = 0;
+		int m = 0;
+		if (strlen(a) % 3 != 0)
+		{
+			for (ss = 0; ss < strlen(q) / 3; ss++)
+			{
+				l[ss] = a[ss];
+			}
+			l[ss] = '\0';
+			for (ss = strlen(q) / 3; ss < strlen(q); )
+			{
+				ming1[k] = a[ss];
+				ss++;
+				k++;
+				ming1[k] = a[ss];
+				ss++;
+				k++;
+				ming1[k] = l[m];
+				m++;
+				k++;
+			}
+			kkk--;
+			if (kkk != 0)
+			{
+				char zj[maxsize];
+				for (int sss = 0; sss < strlen(ming1); sss++)
+				{
+					zj[sss] = ming1[sss];
+				}
+				zljm(zj, kkk);
+			}
+		}
+		if (strlen(a) % 3 == 0)
+		{
+			for (k = 0; k < strlen(a) / 3; k++)
+			{
+				l[k] = a[k];
+			}
+			int s = 0;
+			for (k = strlen(a) / 3, m = 0; k < strlen(a); )
+			{
+				ming1[m] = a[k];
+				k++;
+				m++;
+				ming1[m] = a[k];
+				k++;
+				m++;
+				ming1[m] = l[s];
+				m++;
+				s++;
+			}
+			zls--;
+			if (zls != 0)
+			{
+				char zj[maxsize];
+				for (int sss = 0; sss < strlen(ming1); sss++)
+				{
+					zj[sss] = ming1[sss];
+				}
+				zljm(zj, zls);
+			}
+		}
+	}
+	else if (kkk == 0)
+	{
+		for (int iii = 0; iii < strlen(a); iii++)
+		{
+			ming1[iii] = a[iii];
+		}
+	}
+}
+
+void bro(bt *T, char t, int i)
+{
+	if ((*T)->lc->data == t || (*T)->rc->data == t)
+	{
+		if (t != (*T)->lc->data)
+		{
+			br = (*T)->lc->data;
+		}
+		else if (t != (*T)->rc->data)
+		{
+			br = (*T)->rc->data;
+		}
+	}
+	else
+	{
+		bt s = NULL, k = NULL;
+		s = (*T)->rc;
+		k = (*T)->lc;
+		if (k->lc != NULL)
+		{
+			char z = t;
+			bro(&k, z, i + 1);
+		}
+		else if (s->lc != NULL)
+		{
+			char z = t;
+			bro(&s, z, i + 1);
+		}
+	}
+}
+
+void father(bt *T, char t, int i)
+{
+	if ((*T)->lc->data == t || (*T)->rc->data == t)
+	{
+		fa = (*T)->data;
+	}
+	else
+	{
+		bt s = NULL, k = NULL;
+		s = (*T)->rc;
+		k = (*T)->lc;
+		if (s->lc == NULL&&k->lc != NULL)
+		{
+			father(&k, ming1[i], i);
+		}
+		else if (k->lc == NULL&&s->lc != NULL)
+		{
+			father(&s, ming1[i], i);
+		}
+	}
+}
+
+void jiemi(bt *T, char key, int i)
+{
+	int sss;
+	if (T)
+	{
+		if ((*T)->data == key && (*T)->rc != NULL)
+		{
+			if ((*T)->lc->data == ming1[ss + 1] || (*T)->rc->data == ming1[ss + 1])
+			{
+				bt U = NULL;
+				for (sss = 0; sss < strlen(b); sss++)
+				{
+					jianshu2(&U, b[sss], sss);
+				}
+				bro(&U, ming1[i + 1], i + 1);
+				ming2[jib] = br;
+				jib++;
+			}
+		}
+		else if ((*T)->data == key && (*T)->rc == NULL)
+		{
+			bt U = NULL;
+			for (sss = 0; sss < strlen(b); sss++)
+			{
+				jianshu2(&U, b[sss], sss);
+			}
+			father(&U, key, i);
+			ming2[jib] = fa;
+			jib++;
+		}
+		else if ((*T)->data != key && (*T)->rc != NULL)
+		{
+			bt s = NULL, k = NULL;
+			s = (*T)->lc;
+			k = (*T)->rc;
+			jiemi(&s, ming1[ss], i);
+			jiemi(&k, ming1[ss], i);
+		}
+	}
+}
+
+void JIEMI(bt *T, char key, int i)
+{
+	int sss;
+	if (T)
+	{
+		if ((*T)->data == key && (*T)->rc != NULL)
+		{
+			if ((*T)->lc->data == ming1[ss + 1] || (*T)->rc->data == ming1[ss + 1])
+			{
+				bt G = NULL;
+				for (sss = 0; sss < strlen(B); sss++)
+				{
+					jianshu2(&G, B[sss], sss);
+				}
+				bro(&G, ming1[i + 1], i + 1);
+				ming2[jib] = br;
+				jib++;
+			}
+		}
+		else if ((*T)->data == key && (*T)->rc == NULL)
+		{
+			bt G = NULL;
+			for (sss = 0; sss < strlen(B); sss++)
+			{
+				jianshu2(&G, B[sss], sss);
+			}
+			father(&G, key, i);
+			ming2[jib] = fa;
+			jib++;
+		}
+		else if ((*T)->data != key && (*T)->rc != NULL)
+		{
+			bt s = NULL, k = NULL;
+			s = (*T)->lc;
+			k = (*T)->rc;
+			JIEMI(&s, ming1[ss], i);
+			JIEMI(&k, ming1[ss], i);
+		}
+	}
+}
+
+int main()
+{
+	printf("欢迎来到类人猿解密系统\n");
+	printf("请输入密钥:\n");
+	srmy(q);
+	int i = 0;
+	bt T = NULL, U = NULL;
+	for (ss = 0; ss < strlen(miyao); ss++)
+	{
+		if (miyao[ss] >= 'A'&&miyao[ss] <= 'Y')
+		{
+			miyao[ss] = (char)((int)miyao[ss] + 32);
+		}
+	}
+	gz(miyao);
+	for (ss = 0; ss < strlen(miyao); ss++)
+	{
+		miyao[ss] = (char)((int)miyao[ss] - 32);
+	}
+	GZ(miyao);
+	for (i = 0; i < strlen(b); i++)
+	{
+		jianshu2(&T, b[i], i);
+	}
+	for (i = 0; i < strlen(B); i++)
+	{
+		jianshu2(&U, B[i], i);
+	}
+	printf("请输入密文:\n");
+	printf("***如果加密结果最后一位是空格，直接复制过来空格会被略去，请注意补空格***\n");
+	gets(q);
+	printf("请输入栅栏加密的次数:\n");
+	scanf_s("%d", &zls);
+	zljm(q, zls);
+	jib = 0;
+	for (ss = 0; ss < strlen(ming1);)
+	{
+		if (ming1[ss] >= 'a'&&ming1[ss] <= 'y')
+		{
+			jiemi(&T, ming1[ss], ss);
+			ss += 2;
+		}
+		else if (ming1[ss] >= 'A'&&ming1[ss] <= 'Y')
+		{
+			JIEMI(&U, ming1[ss], ss);
+			ss += 2;
+		}
+		else
+		{
+			ming2[jib] = ming1[ss];
+			jib++;
+			ss++;
+		}
+	}
+	printf("明文为:\n");
+	for (ss = 0; ss < strlen(ming2); ss++)
+	{
+		printf("%c", ming2[ss]);
+	}
+	printf("\n");
+	system("pause");
+	return 0;
+}
